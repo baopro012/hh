@@ -28,7 +28,7 @@
     }
     .fade-in-up {
       opacity: 0;
-      transform: translateY(40px);
+      transform: translateY(20px);
       transition: none;
     }
     .fade-in-up.show {
@@ -464,16 +464,21 @@
     @media screen and (max-width: 768px) {
       body {
         padding: 20px;
+        overflow-x: hidden; /* Ngăn chữ tràn ra ngoài */
       }
 
       #mainWish {
         font-size: 1.8rem;
         margin-bottom: 0.5rem;
+        word-wrap: break-word; /* Cho phép chữ xuống dòng */
+        max-width: 100%; /* Đảm bảo không vượt quá chiều rộng màn hình */
       }
 
       #subWish {
         font-size: 1.2rem;
         margin-bottom: 1rem;
+        word-wrap: break-word; /* Cho phép chữ xuống dòng */
+        max-width: 100%; /* Đảm bảo không vượt quá chiều rộng màn hình */
       }
 
       .cake {
@@ -519,8 +524,8 @@
       }
 
       .heart-img {
-        width: 80px;
-        height: 80px;
+        width: 80px; /* Giữ nguyên kích thước ảnh */
+        height: 80px; /* Giữ nguyên kích thước ảnh */
       }
 
       .gift-box {
@@ -593,7 +598,7 @@
     </div>
   </div>
   <div class="hearts"></div>
-  <h1 id="mainWish" class="fade-in-up" data-text="Chúc mừng sinh nhật người con gái tuyệt vời nhất cuộc đời anh! "></h1>
+  <h1 id="mainWish" class="fade-in-up" data-text="Chúc mừng sinh nhật! người con gái (tuyệt vời nhất) cuộc đời anh!"></h1>
   <p id="subWish" class="wish-text fade-in-up" data-text="anh mong em luôn mạnh khoẻ, luôn rạng rỡ và hạnh phúc, anh sẽ luôn cố gắng để mang đến cho em những điều tốt nhất!❤️"></p>
   <img src="img/cake.png" alt="Birthday Cake" class="cake fade-in-up" />
   <button class="button fade-in-up" onclick="showGift()">Nhận lời chúc</button>
@@ -644,12 +649,20 @@
       openBoxSound.play();
       // Sau khi hộp quà mở (khoảng 700ms), mới hiện ảnh trái tim
       setTimeout(showHeartImages, 700);
+      // Ẩn hộp quà sau khi mở
+      setTimeout(() => {
+        document.getElementById('giftBox').style.display = 'none';
+      }, 1000); // Điều chỉnh thời gian nếu cần
     }
 
     function openGiftBox() {
       document.getElementById('giftBox').classList.add('open');
       document.getElementById('openBoxSound').play(); // Phát âm thanh khi mở hộp quà
       setTimeout(showHeartImages, 700);
+      // Ẩn hộp quà sau khi mở
+      setTimeout(() => {
+        document.getElementById('giftBox').style.display = 'none';
+      }, 1000); // Điều chỉnh thời gian nếu cần
     }
 
     function showHeartImages() {
@@ -662,11 +675,23 @@
         'img/u.jpg','img/y.jpg','img/q.jpg','img/s.jpg','img/t.jpg',
         'img/ư.jpg','img/o.jpg','img/r.jpg','img/x.jpg'
       ];
-      // Tọa độ tạo hình trái tim (19 điểm, scale lớn hơn nữa)
-      const coords = [
-        [0, -300],[120, -400],[240, -370],[320, -240],[400, -120],[400, 0],[320, 120],[240, 240],[120, 320],[0, 370],
-        [-120, 320],[-240, 240],[-320, 120],[-400, 0],[-400, -120],[-320, -240],[-240, -370],[-120, -400],[0, -150]
-      ];
+      const scale = 0.6;
+const scaleXLeft = 0.7;   // bên trái xích vào nhiều hơn
+const scaleXRight = 0.75; // bên phải giữ gần như cũ
+const scaleY = 1.1;
+const offsetX = -40;      // dịch sang trái ít hơn để cân bằng
+
+const coordsRaw = [
+  [0, -300],[120, -400],[240, -370],[320, -240],[400, -120],[400, 0],[320, 120],[240, 240],[120, 320],[0, 370],
+  [-120, 320],[-240, 240],[-320, 120],[-400, 0],[-400, -120],[-320, -240],[-240, -370],[-120, -400],[0, -150]
+];
+
+const coords = coordsRaw.map(([x, y]) => {
+  let xScaled;
+  if (x < 0) xScaled = x * scale * scaleXLeft + 400 + offsetX;
+  else xScaled = x * scale * scaleXRight + 400 + offsetX;
+  return [xScaled, y * scale * scaleY + 400];
+});
       for (let i = 0; i < 19; i++) {
         const img = document.createElement('img');
         img.src = imgList[i];
@@ -675,10 +700,9 @@
         img.style.top = '50%';
         img.style.opacity = '0';
         heartImages.appendChild(img);
-        // Hiệu ứng bay lên vị trí trái tim
         setTimeout(() => {
-          img.style.left = (400 + coords[i][0]) + 'px';
-          img.style.top = (400 + coords[i][1]) + 'px';
+          img.style.left = coords[i][0] + 'px';
+          img.style.top = coords[i][1] + 'px';
           img.style.opacity = '1';
         }, 100 * i + 200);
       }
@@ -693,6 +717,11 @@
           }
         }
       }, 3000);
+
+      // Ẩn hộp quà sau 2 giây
+      setTimeout(() => {
+        document.getElementById('giftBox').style.display = 'none';
+      }, 2000);
     }
 
     function playMusic() {

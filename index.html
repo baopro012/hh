@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chúc Mừng Sinh Nhật!</title>
   <style>
     body {
@@ -57,7 +57,6 @@
     }
     .cake {
       width: 150px;
-      max-width: 80vw;
       margin: 20px auto;
       animation: bounce 2s infinite;
       display: block;
@@ -461,98 +460,107 @@
       opacity: 1;
     }
 
-    /* Responsive cho điện thoại */
-    @media (max-width: 700px) {
+    /* Thêm media queries cho thiết bị di động */
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 20px;
+      }
+
+      #mainWish {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+      }
+
+      #subWish {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .cake {
+        width: 120px;
+      }
+
+      .button {
+        padding: 12px 24px;
+        font-size: 1.1rem;
+      }
+
       .lock-box {
-        min-width: 90vw;
-        min-height: 60vw;
-        padding: 24px 8px 16px 8px;
-        border-radius: 24px;
+        min-width: 300px;
+        padding: 40px 24px 30px 24px;
       }
-      .lock-avatar img {
-        width: 70px;
-        height: 70px;
-      }
+
       .lock-title {
-        font-size: 1.3rem;
+        font-size: 1.6rem;
       }
+
       .lock-subtitle {
         font-size: 1rem;
       }
+
       .lock-box input {
-        font-size: 1.3rem;
-        width: 60px;
-        padding: 8px 0;
+        font-size: 1.8rem;
+        width: 70px;
       }
+
       .lock-keypad {
-        grid-template-columns: repeat(3, 40px);
+        grid-template-columns: repeat(3, 50px);
         grid-gap: 8px;
       }
+
       .lock-keypad button {
-        font-size: 1.1rem;
-        padding: 10px 0;
-        border-radius: 8px;
+        font-size: 1.2rem;
+        padding: 12px 0;
       }
-      .gift-box, .gift-box .lid, .gift-box .box {
-        width: 80px !important;
-        height: 80px !important;
-      }
-      .gift-box .lid {
-        height: 28px !important;
-      }
-      .gift-box .box {
-        top: 28px !important;
-        height: 52px !important;
-      }
-      .heart-images {
-        width: 320px;
-        height: 320px;
-      }
-      .heart-img {
-        width: 44px;
-        height: 44px;
-        border-radius: 10px;
-      }
-      .bg-light {
-        width: 220px;
-        height: 220px;
-        left: 40%;
-        top: 10%;
-      }
-      .bg-img-floating {
-        width: 120px;
-        height: 120px;
-        left: 10vw;
-        top: 10vh;
-      }
-      .corner-img {
-        width: 60px;
-        height: 60px;
-        right: 8px;
-        bottom: 8px;
-        border-radius: 12px;
-      }
+
       .bg-tile {
-        width: 30vw;
-        height: 18vw;
-        border-radius: 10px;
-        margin: 0.5vw;
+        width: 45vw;
+        height: 45vh;
       }
+
+      .heart-img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .gift-box {
+        width: 100px;
+        height: 100px;
+      }
+
+      .gift-box .lid {
+        width: 100px;
+        height: 35px;
+      }
+
+      .gift-box .box {
+        width: 100px;
+        height: 65px;
+      }
+    }
+
+    /* Thêm meta viewport để đảm bảo hiển thị đúng trên mobile */
+    @media screen and (max-width: 480px) {
       #mainWish {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
       }
+
       #subWish {
         font-size: 1rem;
       }
-      p {
-        font-size: 1rem;
+
+      .lock-box {
+        min-width: 280px;
+        padding: 30px 20px;
       }
-      .cake {
-        width: 80px;
+
+      .lock-keypad {
+        grid-template-columns: repeat(3, 45px);
       }
-      .button {
-        font-size: 0.9rem;
-        padding: 8px 12px;
+
+      .lock-keypad button {
+        font-size: 1.1rem;
+        padding: 10px 0;
       }
     }
   </style>
